@@ -1,0 +1,59 @@
+SUNET Mailfilter Plugin for Outlook 2010/2013
+
+Prerequisites
+-------------
+
+* Visual Studio 2013 with Office extensibility
+* WiX (Windows Installer Xml) 3.9 or later (see http://wixtoolset.org)
+
+Building
+--------
+
+Open the project in VisualStudio 2013 and do a Build Solution (-> Release)
+
+Packaging
+---------
+
+Open a VS2013 Tools Command, add the wix binaries to the path, and in the Installer directory, run:
+
+> build.cmd <version> <output_dir> <arch>
+
+Configuring
+-----------
+
+By default, the Mailfilter plugin doesn't need any configuration if MIME-headers with voting links are present in the email messages AND unauthenicated voting is allowed.
+(In Mailfilter, make sure S-2600, S-2700 and S-3200 (under Bayes Settings) are all true)
+
+If you want to customize the configuration of the Mailfilter plugin, it's done from the windows registry.
+Base registry path: HKEY_LOCAL_MACHINE\Software\SUNET.Mailfilter
+(Individual keys can be overridden in HKEY_CURRENT_USER\Software\SUNET.Mailfilter)
+
+If CanIt is configured not to include the voting links in the MIME-header for all messages or unauthenticated voting is dithe voting should done over the API, the following registry keys needs to be configured:
+
+ApiUrl			string		Url of CanIt API services [required]
+ApiUser			string		User for CanIt API services [required]
+ApiPassword		string		Password for CanIt API services [required]
+
+If you want an additional button for forwarding the marked email(s) as attachments and sent to email address of your choosing, the following keys can be configured:
+
+ForwardingAddress	string		Address to forward mail to [required]
+ForwardingButtonText	string		Text of forwarding button [optional]
+ForwardingSubject	string		Text of mail subject if forwarding mail [optional]
+ForwardingBody		string		Text of mail body if forwarding mail [optional]
+ForwardingPopup		string		Confirmation popup message if forwarding mail [optional]
+ForwardingMimeHeader	string		Mime header to add to forwarded mail [optional]
+ForwardingMimeValue	string		Mime header value to add to forwarded mail [optional]
+
+Other customizations that optionally can be configured:
+
+SpamButtonText		string		Text of spam button [optional]
+HamButtonText		string		Text of non-spam button [optional]
+ForgetButtonText	string		Text of forget button [optional]
+ButtonGroupText		string		Text of button toolbar [optional]
+ShowPopups		pool		Confirmation popup message then voting [optional]
+
+Debugging
+---------
+
+The Mailfilter plugin will log to the system eventlog.
+If the Plugin doesn't work, start by checking the eventlog for hints.

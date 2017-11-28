@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define Manufacturer = "Sunet" ?>
+
+  <!-- Define product name and install folder according to platform -->
+  <?if $(var.ProcessorArchitecture) = x64 ?>
+  <?define ProductName = "Sunet Mailfilter OutlookPlugin (64 bit)" ?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+    <?define ProductName = "Sunet Mailfilter OutlookPlugin" ?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+</Include>

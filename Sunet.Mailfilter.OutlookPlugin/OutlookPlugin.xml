@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+    <tabs>
+      <tab idMso="TabMail">
+        <group id="MyGroup"
+               label="GroupPlaceholderLabel">
+          <button id="SpamButton" getImage="getOutlookPluginImage" size="large" label="SpamButtonPlaceholderLabel" onAction="spam_Click" />
+          <button id="HamButton" getImage="getOutlookPluginImage" size="large" label="HamButtonPlaceholderLabel" onAction="ham_Click" />
+          <button id="ForgetButton" getImage="getOutlookPluginImage" size="large" label="ForgetButtonPlaceholderLabel" onAction="forget_Click" />
+          <button id="ForwardButton" getImage="getOutlookPluginImage" size="large" label="ForwardButtonPlaceholderLabel" onAction="forward_Click" />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
+

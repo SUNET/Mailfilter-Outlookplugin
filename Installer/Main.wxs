@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include $(sys.CURRENTDIR)InstallConfig.wxi ?>
+
+  <Product UpgradeCode="7C5A3EB7-9D5D-4932-9167-3BCC326C0AF2" Id="*" Name="Sunet Mailfilter OutlookPlugin" Language="1033" Version="$(env.Version)" Manufacturer="$(var.Manufacturer)">
+    <Package Id="*" Description="Installer for Sunet Mailfilter OutlookPlugin" Comments="Installer for Sunet Mailfilter OutlookPlugin." InstallerVersion="300" Compressed="yes" Platform="$(var.ProcessorArchitecture)" />
+
+    <Condition Message="This setup requires the .NET Framework 4.0 or higher."><![CDATA[MsiNetAssemblySupport >= "4.0.30319"]]></Condition>
+
+    <Media Id="1" Cabinet="Sunet.Mailfilter.OutlookPlugin.cab" EmbedCab="yes" CompressionLevel="high" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLLOCATION" ShortName="smfsp" Name="$(var.Manufacturer)">
+          <Directory Id="Mailfilter" Name="Mailfilter">
+            <?include Programfiles.wxi?>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <?include Programfiles_features.wxi?>
+    <?include UI.wxi?>
+
+    <Upgrade Id="7C5A3EB7-9D5D-4932-9167-3BCC326C0AF2">
+      <UpgradeVersion IgnoreRemoveFailure="no" IncludeMaximum="no" IncludeMinimum="no" MigrateFeatures="yes" Property="OUTLOOKPLUGIN_UPGRADE" Minimum="0.0.0.0" />
+    </Upgrade>
+  </Product>
+</Wix>

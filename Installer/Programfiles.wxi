@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Component Id="RegistrySettings" Guid="0EC54F1D-D72A-4DC7-A371-4573D513A543" Permanent="yes" Win64="$(var.Win64)">
+
+    <util:EventSource Log="Application" Name="Mailfilter Plugin" EventMessageFile="C:\Windows\Microsoft.NET\Framework64\v4.0.30319\EventLogMessages.dll"/>
+    <Environment Id="UpdatePath" Name="PATH" System="yes" Part="last" Value="[INSTALLLOCATION]Sunet\Mailfilter" />
+
+    <RegistryValue Root="HKLM" Key="Software\Microsoft\Office\Outlook\Addins\Sunet.Mailfilter.OutlookPlugin" Name="Description" Action="write" Type="string" Value="Sunet Mailfilter Spam categorization outlook plugin" />
+    <RegistryValue Root="HKLM" Key="Software\Microsoft\Office\Outlook\Addins\Sunet.Mailfilter.OutlookPlugin" Name="FriendlyName" Action="write" Type="string" Value="Sunet.Mailfilter.OutlookPlugin" />
+    <RegistryValue Root="HKLM" Key="Software\Microsoft\Office\Outlook\Addins\Sunet.Mailfilter.OutlookPlugin" Name="LoadBehavior" Action="write" Type="integer" Value="3" />
+    <RegistryValue Root="HKLM" Key="Software\Microsoft\Office\Outlook\Addins\Sunet.Mailfilter.OutlookPlugin" Name="Manifest" Action="write" Type="string" Value="[INSTALLLOCATION]Mailfilter\Sunet.Mailfilter.OutlookPlugin.vsto|vstolocal" />
+
+    <RegistryValue Root="HKLM" Key="Software\Sunet.Mailfilter" Name="AppLocation" Action="write" Type="string" Value="[INSTALLLOCATION]" />
+    <RegistryValue Root="HKLM" Key="Software\Sunet.Mailfilter" Name="InstallDir" Action="write" Type="string" Value="[INSTALLDIR]" />
+  </Component>
+
+  <Component Id="AppServices" Guid="BB52AEB9-32AF-4513-83BB-1BBDF302CF0C" Win64="$(var.Win64)">
+    <File Id="plugindll" ShortName="nnspam.dll" Source="..\Sunet.Mailfilter.OutlookPlugin\bin\Release\Sunet.Mailfilter.OutlookPlugin.dll" />
+    <File Id="pluginmanifest" ShortName="nnspam.mft" Source="..\Sunet.Mailfilter.OutlookPlugin\bin\Release\Sunet.Mailfilter.OutlookPlugin.dll.manifest" />
+    <File Id="pluginvsto" ShortName="nnspam.vst" Source="..\Sunet.Mailfilter.OutlookPlugin\bin\Release\Sunet.Mailfilter.OutlookPlugin.vsto" />
+    <File Id="officedll" ShortName="offutil.dll" Source="..\Sunet.Mailfilter.OutlookPlugin\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll" />
+    <File Id="outlookdll" ShortName="oututil.dll" Source="..\Sunet.Mailfilter.OutlookPlugin\bin\Release\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll" />
+  </Component>
+</Include>
