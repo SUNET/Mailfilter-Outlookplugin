@@ -1,4 +1,4 @@
-# Mailfilter-Outlookplugin
+# SUNET Mailfilter OutlookPlugin
 Outlook plugin for SUNET Mailfilter
 
 See the Wiki for details on Building etc.
