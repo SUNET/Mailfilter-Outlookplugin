@@ -1,0 +1,15 @@
+﻿<Window x:Class="Sunet.Mailfilter.OutlookPlugin.MessageBoxControlBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sunet.Mailfilter.OutlookPlugin"
+             mc:Ignorable="d" Height="396.619" Width="418.608">
+    <Grid>
+        <TextBox x:Name="tbMail" HorizontalAlignment="Left" Height="221" Margin="13,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="381" TextChanged="TbMail_TextChanged" AcceptsReturn="True" FontSize="18"/>
+        <Button x:Name="btcSend" Content="Send" HorizontalAlignment="Left" Margin="13,300,0,0" VerticalAlignment="Top" Width="188" Height="50" Click="BtcSend_Click" FontSize="16"/>
+        <Button x:Name="btcCancel" Content="Cancel" HorizontalAlignment="Left" Margin="206,300,0,0" VerticalAlignment="Top" Width="188" Height="50" Click="BtcCancel_Click" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="14,10,0,0" TextWrapping="Wrap" Text="Please type a comment of why you want to send this message for further investigation:" VerticalAlignment="Top" Height="59" Width="380" FontSize="18"/>
+
+    </Grid>
+</Window>
