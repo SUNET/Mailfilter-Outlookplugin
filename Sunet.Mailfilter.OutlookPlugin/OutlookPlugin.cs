@@ -147,7 +147,7 @@ namespace Sunet.Mailfilter.OutlookPlugin
                         // No messages were selected
                         if (headerItems.Count <= 0)
                         {
-                            MessageBox.Show("No traininginfo was available in the selected items.");
+                            System.Windows.Forms.MessageBox.Show("No traininginfo was available in the selected items.");
                             return;
                         }
 
@@ -193,7 +193,7 @@ namespace Sunet.Mailfilter.OutlookPlugin
                         // No messages were selected
                         if (headerItems.Count <= 0)
                         {
-                            MessageBox.Show("No traininginfo was available in the selected items.");
+                            System.Windows.Forms.MessageBox.Show("No traininginfo was available in the selected items.");
                             return;
                         }
 
@@ -251,15 +251,15 @@ namespace Sunet.Mailfilter.OutlookPlugin
 
                     if (failedMessages > 0 && failedMessages < headerItems.Count)
                     {
-                        MessageBox.Show("Some of the messages could not be voted on.");
+                        System.Windows.Forms.MessageBox.Show("Some of the messages could not be voted on.");
                     }
                     else if (failedMessages > 0)
                     {
-                        MessageBox.Show("None of the messages could not be voted on.");
+                        System.Windows.Forms.MessageBox.Show("None of the messages could not be voted on.");
                     }
                     else
                     {
-                        MessageBox.Show(string.Format("The selected message(s) has been voted as {0}", action));
+                        System.Windows.Forms.MessageBox.Show(string.Format("The selected message(s) has been voted as {0}", action));
                     }
                 }
             }
@@ -268,7 +268,7 @@ namespace Sunet.Mailfilter.OutlookPlugin
                 Globals.ThisAddIn.LogMessage(ex.Message, ex.StackTrace);
                 if (Globals.ThisAddIn.ShowPopups)
                 {
-                    MessageBox.Show("An error occurred, check the eventlog for detailed information.");
+                    System.Windows.Forms.MessageBox.Show("An error occurred, check the eventlog for detailed information.");
                 }
             }
         }
@@ -344,6 +344,7 @@ namespace Sunet.Mailfilter.OutlookPlugin
         public void spam_Click(IRibbonControl control)
         {
             this.ReportMail(MimeHeaderSpam, SpamButtonText, ShortSpamAction);
+            
         }
 
         public void ham_Click(IRibbonControl control)
@@ -364,37 +365,42 @@ namespace Sunet.Mailfilter.OutlookPlugin
                 {
                     return;
                 }
+                MessageBoxControlBox controlUI = new MessageBoxControlBox();
+                controlUI.ShowDialog();
+                if (controlUI.DialogResult == true)
+                {
+                    Microsoft.Office.Interop.Outlook._MailItem mi = (Microsoft.Office.Interop.Outlook._MailItem)Globals.ThisAddIn.Application.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+                    mi.Subject = Globals.ThisAddIn.ForwardingSubject;
+                    mi.Body = Globals.ThisAddIn.ForwardingBody;
+                    mi.Recipients.Add(Globals.ThisAddIn.ForwardingAddress);
+                    foreach (Microsoft.Office.Interop.Outlook.MailItem mailitem in Globals.ThisAddIn.Application.ActiveExplorer().Selection)
+                    {
+                        while (mailitem.Attachments.Count > 0)
+                        {
+                            mailitem.Attachments.Remove(1);
+                        }
+                        mi.Attachments.Add(mailitem);
+                        mi.Body = controlUI.Reason;
+                    }
 
-                if (MessageBox.Show("Send selected mail?", "Send", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    AddHeader(mi, Globals.ThisAddIn.ForwardingMimeHeader, Globals.ThisAddIn.ForwardingMimeValue);
+                    mi.Send();
+
+                    System.Windows.Forms.MessageBox.Show("The message(s) has been forwarded.");
+                }
+                else
                 {
                     return;
                 }
 
-                Microsoft.Office.Interop.Outlook._MailItem mi = (Microsoft.Office.Interop.Outlook._MailItem)Globals.ThisAddIn.Application.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
-                mi.Subject = Globals.ThisAddIn.ForwardingSubject;
-                mi.Body = Globals.ThisAddIn.ForwardingBody;
-                mi.Recipients.Add(Globals.ThisAddIn.ForwardingAddress);
-                foreach (Microsoft.Office.Interop.Outlook.MailItem mailitem in Globals.ThisAddIn.Application.ActiveExplorer().Selection)
-                {
-                    while (mailitem.Attachments.Count > 0)
-                    {
-                        mailitem.Attachments.Remove(1);
-                    }
-
-                    mi.Attachments.Add(mailitem);
-                }
-
-                AddHeader(mi, Globals.ThisAddIn.ForwardingMimeHeader, Globals.ThisAddIn.ForwardingMimeValue);
-                mi.Send();
-
-                MessageBox.Show("The message(s) has been forwarded.");
+                
             }
             catch (Exception ex)
             {
                 Globals.ThisAddIn.LogMessage(ex.Message, ex.StackTrace);
                 if (Globals.ThisAddIn.ShowPopups)
                 {
-                    MessageBox.Show("An error occurred, check the eventlog for detailed information.");
+                    System.Windows.Forms.MessageBox.Show("An error occurred, check the eventlog for detailed information.");
                 }
             }
         }
